@@ -100,6 +100,11 @@ public class BinaryShardedJedis extends Sharded<Jedis, JedisShardInfo>
 	return j.decr(key);
     }
 
+    public Long del(byte[] key) {
+        Jedis j = getShard(key);
+        return j.del(key);
+    }
+    
     public Long incrBy(byte[] key, long integer) {
 	Jedis j = getShard(key);
 	return j.incrBy(key, integer);
@@ -336,6 +341,21 @@ public class BinaryShardedJedis extends Sharded<Jedis, JedisShardInfo>
 	return j.zscore(key, member);
     }
 
+    public Transaction multi(byte[] key) {
+        Jedis j = getShard(key);
+        return j.multi();
+    }
+    
+    public String watch(byte[] key) {
+        Jedis j = getShard(key);
+        return j.watch(key);
+    }
+
+    public String unwatch(byte[] key) {
+        Jedis j = getShard(key);      
+        return j.unwatch();
+    }
+  
     public List<byte[]> sort(byte[] key) {
 	Jedis j = getShard(key);
 	return j.sort(key);
